@@ -131,8 +131,11 @@ const data = [
 
 window.addEventListener("DOMContentLoaded", () => {
     const itemsList = document.querySelector(".item-list");
-    const finder = document.querySelector("input");
+    const finder = document.querySelector(".search-input");
     const navLinks = document.querySelectorAll(".nav-link");
+    const checkInps = document.querySelectorAll(".inp-check");
+
+    let filteredBrands = [];
 
     function renderAll(data) {
         itemsList.textContent = "";
@@ -140,6 +143,11 @@ window.addEventListener("DOMContentLoaded", () => {
         data.map((i) => {
             const added = '<button class="btn added">Добавлено</button>';
             const buy = '<button class="btn">Купить</button>';
+
+            if (filteredBrands.length && !filteredBrands.includes(i.brand)) {
+                return;
+            }
+
             itemsList.insertAdjacentHTML(
                 "afterbegin",
                 `
@@ -206,7 +214,19 @@ window.addEventListener("DOMContentLoaded", () => {
     function renderFiltered(items) {
         renderAll(items);
     }
-    data.f;
+
+    checkInps.forEach((inp) => {
+        inp.addEventListener("input", (e) => {
+            if (e.target.checked) {
+                filteredBrands.push(e.target.name);
+            } else {
+                filteredBrands = filteredBrands.filter(
+                    (el) => el != e.target.name
+                );
+            }
+            renderAll(data);
+        });
+    });
 
     finder.addEventListener("input", (e) => {
         if (!e.target.value) {
@@ -216,25 +236,30 @@ window.addEventListener("DOMContentLoaded", () => {
         let word = e.target.value.trim().toLowerCase();
         let finded = [];
         data.filter((el) => {
-            if (el.model.toLowerCase().includes(e.target.value.toLowerCase())) {
+            if (
+                el.model.toLowerCase().includes(word) ||
+                el.brand.toLowerCase().includes(word)
+            ) {
                 finded.push(el);
             }
         });
         renderFiltered(finded);
     });
 
-    navLinks.forEach((link) => {
-        link.addEventListener("click", (e) => {
-            itemsList.textContent = "";
-            if (document.querySelector(".active")) {
-                document.querySelector(".active").classList.remove("active");
-            }
-            e.target.classList.add("active");
-            if (e.target.textContent.trim() === "Shop") {
-                renderAll(data);
-            }
-            // if (e.target.textContent.trim() === "Cart") {
-            // }
+    navLinks[1].addEventListener("click", () => {
+        itemsList.textContent = "";
+        const findedIds = [];
+        const findedObj = [];
+        for (let key in { ...localStorage }) {
+            findedIds.push(key);
+        }
+        findedIds.map((id) => {
+            findedObj.push(data.find((el) => el.id === +id));
+            console.log(findedObj);
         });
+
+        if (!findedIds.length) {
+            itemsList.textContent = "Вы ничего не добавили";
+        }
     });
 });

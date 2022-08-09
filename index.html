@@ -24,7 +24,11 @@
                     <button class="find-btn">
                         <ion-icon name="search-circle-outline"></ion-icon>
                     </button>
-                    <input type="text" placeholder="Введите ваш запрос..." />
+                    <input
+                        class="search-input"
+                        type="text"
+                        placeholder="Введите ваш запрос..."
+                    />
                 </label>
                 <nav>
                     <ul class="nav-list">
@@ -49,6 +53,46 @@
         <article class="adv">30% скидка на все товары до 31 августа</article>
         <main class="main">
             <div class="wrapper">
+                <div class="filters">
+                    <div class="brand-filters">
+                        <label class="check-inp">
+                            Goolden Goose
+                            <input
+                                class="inp-check"
+                                type="checkbox"
+                                id="gg"
+                                name="Goolden Goose"
+                            />
+                        </label>
+                        <label class="check-inp">
+                            Nike
+                            <input
+                                class="inp-check"
+                                type="checkbox"
+                                id="n"
+                                name="Nike"
+                            />
+                        </label>
+                        <label class="check-inp">
+                            Adidas Originals
+                            <input
+                                class="inp-check"
+                                type="checkbox"
+                                id="ao"
+                                name="Adidas Originals"
+                            />
+                        </label>
+                        <label class="check-inp">
+                            Asics
+                            <input
+                                class="inp-check"
+                                type="checkbox"
+                                id="as"
+                                name="Asics"
+                            />
+                        </label>
+                    </div>
+                </div>
                 <h1 class="heading">Найдено:</h1>
                 <ul class="item-list"></ul>
             </div>
